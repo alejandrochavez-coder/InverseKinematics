@@ -28,5 +28,8 @@ bool kin_inverse_remove_point(
 std::vector<IKPoint> kin_inverse_enumerate_points(
     IKInstance instance);
 
+std::vector<Vector2D> kin_inverse_enumerate_positions(
+    IKInstance instance);
+
 void kin_destroy_inverse_instance(
     IKInstance instance);

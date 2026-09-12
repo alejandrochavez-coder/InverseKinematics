@@ -48,6 +48,19 @@ std::vector<IKPoint> kin_inverse_enumerate_points(IKInstance instance) {
     return instance->points;
 }
 
+std::vector<Vector2D> kin_inverse_enumerate_positions(IKInstance instance) {
+    std::vector<Vector2D> positions;
+    positions.reserve(instance->points.size() + 1);
+
+    positions.emplace_back(instance->anchor);
+
+    for (const auto& point : instance->points) {
+        positions.emplace_back(point.position);
+    }
+
+    return positions;
+}
+
 void kin_destroy_inverse_instance(IKInstance instance) {
     free(instance);
 }
