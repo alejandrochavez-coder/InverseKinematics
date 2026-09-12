@@ -61,6 +61,10 @@ std::vector<Vector2D> kin_inverse_enumerate_positions(IKInstance instance) {
     return positions;
 }
 
+void kin_inverse_update(IKInstance instance, Vector2D target) {
+    
+}
+
 void kin_destroy_inverse_instance(IKInstance instance) {
     free(instance);
 }

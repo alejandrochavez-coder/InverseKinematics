@@ -27,10 +27,9 @@ int main() {
     IKInstance ik_instance = kin_create_inverse_instance(anchor);
     kin_inverse_add_point(ik_instance, Vector2D{1, 0}, 5);
 
-    auto points = kin_inverse_enumerate_points(ik_instance);
-    for (auto point : points) {
-        auto position = point.position;
-        std::cout << position.x << ", " << position.y << std::endl;
+    auto positions = kin_inverse_enumerate_positions(ik_instance);
+    for (auto position : positions) {
+        std::cout << "(" << position.x << ", " << position.y << ")" << std::endl;
     }
 
     kin_destroy_inverse_instance(ik_instance);
