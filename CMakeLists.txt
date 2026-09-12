@@ -3,4 +3,7 @@ project(InverseKinematics)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(InverseKinematics main.cpp)
+add_executable(InverseKinematics main.cpp
+        vector2d.h
+        kinematics.h
+        kinematics.cpp)
