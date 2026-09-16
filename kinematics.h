@@ -3,20 +3,27 @@
 #include <vector>
 #include "vector2d.h"
 
-struct IKPoint {
-    Vector2D position;
+struct IKSegment {
+    Vector2D root_position;
+    Vector2D tip_position;
     double length;
 };
 
+typedef struct KSegment_T* KSegment;
 typedef struct IKInstance_T* IKInstance;
 
-IKInstance kin_create_inverse_instance(
-    Vector2D anchor);
+KSegment kin_create_segment(
+    Vector2D position,
+    Vector2D direction,
+    double length);
 
-Vector2D kin_inverse_tip(
+IKInstance kin_create_inverse_instance(
+    Vector2D position);
+
+Vector2D kin_inverse_tip_position(
     IKInstance instance);
 
-bool kin_inverse_add_point(
+bool kin_inverse_add_segment(
     IKInstance instance,
     Vector2D direction,
     double length);
@@ -25,10 +32,7 @@ bool kin_inverse_remove_point(
     IKInstance instance,
     size_t index);
 
-std::vector<IKPoint> kin_inverse_enumerate_points(
-    IKInstance instance);
-
-std::vector<Vector2D> kin_inverse_enumerate_positions(
+std::vector<IKSegment> kin_inverse_enumerate_segments(
     IKInstance instance);
 
 void kin_inverse_update(
