@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "vector2d.h"
+#include "../vector2d.h"
 
 struct IKSegment {
     Vector2D root_position;

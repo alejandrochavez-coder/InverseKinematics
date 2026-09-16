@@ -5,5 +5,5 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(InverseKinematics main.cpp
         vector2d.h
-        kinematics.h
-        kinematics.cpp)
+        kinematic/kinematics.h
+        kinematic/kinematics.cpp)
