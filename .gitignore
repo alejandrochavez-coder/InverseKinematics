@@ -1,2 +1,5 @@
 /.vs
 /out
+/.vscode
+/.idea
+CMakePresets.json

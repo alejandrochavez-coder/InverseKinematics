@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"C:/gamedev/InverseKinematics/build/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

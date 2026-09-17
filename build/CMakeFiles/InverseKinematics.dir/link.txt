@@ -1,3 +1,0 @@
-C:\Users\user_ci\cmake-4.4.2-windows-x86_64\bin\cmake.exe -E rm -f CMakeFiles\InverseKinematics.dir/objects.a
-C:\Users\user_ci\mingw\ucrt64\bin\ar.exe qc CMakeFiles\InverseKinematics.dir/objects.a @CMakeFiles\InverseKinematics.dir\objects1.rsp
-C:\Users\user_ci\mingw\ucrt64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\InverseKinematics.dir/objects.a -Wl,--no-whole-archive -o InverseKinematics.exe -Wl,--out-implib,libInverseKinematics.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\InverseKinematics.dir\linkLibs.rsp

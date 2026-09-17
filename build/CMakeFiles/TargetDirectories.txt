@@ -1,3 +1,0 @@
-C:/gamedev/InverseKinematics/build/CMakeFiles/InverseKinematics.dir
-C:/gamedev/InverseKinematics/build/CMakeFiles/edit_cache.dir
-C:/gamedev/InverseKinematics/build/CMakeFiles/rebuild_cache.dir
