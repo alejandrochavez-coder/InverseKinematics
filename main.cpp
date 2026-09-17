@@ -47,39 +47,60 @@
 #include <cmath>
 #include <iostream>
 #include <variant>
+#include <raylib.h>
+#include <raymath.h>
+#include "vector2d.h"
 
-typedef struct {
-    double x, y, z;
-} Velocity, Position;
+struct Segment {
+	Vector2D start;
+	Vector2D end;
+};
 
-struct VelocityPosition {
-    Velocity velocity;
-    Position position;
-}; 
+struct Physics {
+	Vector2D gravity;
+};
 
-void velocity_system(Velocity& velocity, Position& position) {
-    position.x += velocity.x;
-    position.y += velocity.y;
-    position.z += velocity.z;
+struct Drawable {};
+
+static void draw_segment(const Segment& segment) {
+	Vector2 anchor = {
+		GetScreenWidth() / 2.0,
+		GetScreenHeight() / 2.0
+	};
+
+	Vector2 start = { static_cast<float>(segment.start.x), static_cast<float>(segment.start.y) };
+	Vector2 end = { static_cast<float>(segment.end.x), static_cast<float>(segment.end.y) };
+	start = Vector2Add(start, anchor);
+	end = Vector2Add(end, anchor);
+
+	DrawLineEx(start, end, 2, BLACK);
 }
 
-typedef int ID;
-
 int main() {
-    std::vector<VelocityPosition> velocity_positions;
-    
-    Velocity v{};
-    Position p{};
+	InitWindow(800, 600, "Kinematics Simulation");
+    std::vector<Segment> segments;
 
-    VelocityPosition velocity_position {};
-    velocity_position.velocity = v;
-    velocity_position.position = p;
+    Segment first{};
+	first.start = Vector2D{0, 0};
+	first.end = Vector2D{ 10, 10 };
 
-    velocity_positions.push_back(velocity_position);
+    segments.push_back(first);
 
-    for (auto& velocity_position : velocity_positions) {
-        velocity_system(velocity_position.velocity, velocity_position.position);
-    }
+	while (true) {
+		if (WindowShouldClose()) {
+			CloseWindow();
+			break;
+		}
+
+		BeginDrawing();
+		ClearBackground(RAYWHITE);
+
+		for (const auto& segment : segments) {
+			draw_segment(segment);
+		}
+
+		EndDrawing();
+	}
 
     return 0;
 }
