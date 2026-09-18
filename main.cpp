@@ -16,55 +16,73 @@ struct Container {
 	int id;
 };
 
-struct ContainerManager {
-	std::unordered_map<std::type_index, void*> a;
+// struct ContainerManager {
+// 	std::unordered_map<std::type_index, void*> a;
+// };
+
+// template <typename... Components>
+// struct Archeotype {
+
+// };
+
+// template <typename T>
+// void container_add_component(ContainerManager& manager, T component) {
+	
+// }
+
+// template <typename... Queried>
+// Archeotype<Queried...> manager_get_archeotype(Queried... queries) {
+
+// }
+
+// template <typename... Queried>
+// std::vector<std::tuple<Queried...>> container_query(ContainerManager& manager) {
+// 	std::vector<std::tuple<Queried...>> data{};
+// 	Archeotype archeotype = manager_get_archeotype(Queried...);
+// }
+
+struct Entity {
+	// std::vector<void*> components;
+	int id;
 };
 
-template <typename... Components>
-struct Archeotype {
-
+struct ComponentKey {
+	size_t size;
+	int id;
 };
+
+struct EntityManager {
+	std::vector<Entity> entities;
+	std::unordered_map<int, void*> components;
+	int current_id;
+	int current_component_key_id;
+};
+
+Entity manager_create_entity(EntityManager& manager) {
+	Entity entity{manager.current_id};
+	manager.components[entity.id] = {};
+	manager.current_id++;
+
+	return entity;
+}
 
 template <typename T>
-void container_add_component(ContainerManager& manager, T component) {
+ComponentKey manager_register_component(EntityManager& manager) {
+	return {typeid(T).hash_code(), sizeof(T)}
+}
+
+// void manager_set_component(EntityManager& manager) {
 	
-}
-
-template <typename... Queried>
-Archeotype<Queried...> manager_get_archeotype(Queried... queries) {
-
-}
-
-
-
-template <typename... Queried>
-std::vector<std::tuple<Queried...>> container_query(ContainerManager& manager) {
-	std::vector<std::tuple<Queried...>> data{};
-	Archeotype archeotype = manager_get_archeotype(Queried...);
-}
+// }
 
 int main() {
-	ContainerManager manager{};
+	EntityManager manager{};
+	Entity entity = manager_create_entity(manager);
 
-
-    std::vector<Segment> segments;
-
-
-    Segment first{};
-	first.start = Vector2D{0, 0};
-	first.end = Vector2D{ 10, 10 };
-
-    segments.push_back(first);
-
-	for (const auto& [segment] : container_query<Segment>(manager)) {
-		
-	}
+	std::cout << manager.current_id;
 
 	while (true) {
 
-		for (const auto& segment : segments) {
-			std::cout << "PEPE";
-		}
 	}
 
     return 0;
