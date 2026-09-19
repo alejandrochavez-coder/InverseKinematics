@@ -6,80 +6,73 @@
 #include "vector2d.h"
 #include <typeindex>
 #include <set>
+#include <any>
 
-struct Segment {
-	Vector2D start;
-	Vector2D end;
+struct Information {
+	int info;
 };
-
-struct Container {
-	int id;
-};
-
-// struct ContainerManager {
-// 	std::unordered_map<std::type_index, void*> a;
-// };
-
-// template <typename... Components>
-// struct Archeotype {
-
-// };
-
-// template <typename T>
-// void container_add_component(ContainerManager& manager, T component) {
-	
-// }
-
-// template <typename... Queried>
-// Archeotype<Queried...> manager_get_archeotype(Queried... queries) {
-
-// }
-
-// template <typename... Queried>
-// std::vector<std::tuple<Queried...>> container_query(ContainerManager& manager) {
-// 	std::vector<std::tuple<Queried...>> data{};
-// 	Archeotype archeotype = manager_get_archeotype(Queried...);
-// }
 
 struct Entity {
-	// std::vector<void*> components;
-	int id;
-};
-
-struct ComponentKey {
-	size_t size;
 	int id;
 };
 
 struct EntityManager {
-	std::vector<Entity> entities;
-	std::unordered_map<int, void*> components;
+	std::vector<std::vector<std::any>> components;
 	int current_id;
-	int current_component_key_id;
 };
 
 Entity manager_create_entity(EntityManager& manager) {
-	Entity entity{manager.current_id};
-	manager.components[entity.id] = {};
+	int id = manager.current_id;
+
+	Entity entity{id};
+	manager.components.emplace_back();
 	manager.current_id++;
 
 	return entity;
 }
 
 template <typename T>
-ComponentKey manager_register_component(EntityManager& manager) {
-	return {typeid(T).hash_code(), sizeof(T)}
+void entity_add_component(EntityManager& manager, Entity entity) {
+    manager.components[entity.id].push_back(T{});
 }
 
-// void manager_set_component(EntityManager& manager) {
-	
-// }
+template <typename T>
+T* entity_get_component(EntityManager& manager, Entity entity) {
+	auto& components = manager.components[entity.id];
+
+	for (auto& component : components) {
+		if (component.type() == typeid(T)) {
+			return &std::any_cast<T&>(component);
+		}
+	}
+
+	return nullptr;
+}
+
+template <typename T>
+std::vector<T*> manager_query_component(EntityManager& manager) {
+	std::vector<T*> data{};
+
+	for (auto& components : manager.components) {
+		for (auto& component : components) {
+			if (component.type() == typeid(T)) {
+				data.push_back(std::any_cast<T>(&component));
+			}
+		}
+	}
+
+	return data;
+}
 
 int main() {
 	EntityManager manager{};
 	Entity entity = manager_create_entity(manager);
+	entity_add_component<Information>(manager, entity);
+	entity_get_component<Information>(manager, entity)->info = 5;
 
-	std::cout << manager.current_id;
+	auto component = entity_get_component<Information>(manager, entity);
+
+	std::cout << component->info;
 
 	while (true) {
 
